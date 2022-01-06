@@ -31,11 +31,15 @@ public class CircuitFactory {
     }
 
     public Constant getTrueConstant() {
-        return new Constant(true);
+        Constant constant = new Constant();
+        constant.setValue(true);
+        return constant;
     }
 
     public Constant getFalseConstant() {
-        return new Constant(false);
+        Constant constant = new Constant();
+        constant.setValue(false);
+        return constant;
     }
 
 }

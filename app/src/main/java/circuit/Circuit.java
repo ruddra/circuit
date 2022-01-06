@@ -10,7 +10,6 @@ package circuit;
  */
 /*interface*/
 abstract class Circuit {
-
     public abstract boolean getResult();
     
 }
@@ -70,8 +69,7 @@ class Constant extends Circuit {
         return operand;
     }
 
-    public Constant(boolean operand) {
-        this.operand = operand;
-
+    public void setValue(boolean val) {
+        this.operand = val;
     }
 }
