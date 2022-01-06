@@ -7,8 +7,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CircuitTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    @Test
+    void andX1TrueX2False() {
+        CircuitFactory factory = new CircuitFactory();
+        Constant cons1 = factory.getTrueConstant();
+        Constant cons2 = factory.getFalseConstant();
+        And and = factory.getAnd(cons1, cons2);
+        assertFalse(and.getResult());
     }
 }
