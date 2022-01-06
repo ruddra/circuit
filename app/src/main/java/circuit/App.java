@@ -4,11 +4,78 @@
 package circuit;
 
 public class App {
+    protected Constant cons1;
+    protected Constant cons2;
+    protected And and;
+    protected Or or;
+    
     public String getGreeting() {
-        return "Hello World!";
+        this.cons1 = new Constant(false);
+        this.cons2 = new Constant(true);
+        this.and = new And();
+        this.and.setOperand(cons1, cons2);
+        this.or = new Or();
+        or.setOperand(cons1, new Constant(this.and.getResult()));  
+        return String.valueOf(or.getResult());
     }
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+    }
+}
+
+/*interface*/
+interface Circuit {
+
+    public boolean getResult();
+}
+
+class Binary implements Circuit {
+
+    protected Circuit left;
+    protected Circuit right;
+    protected boolean value;
+
+    public void setOperand(Circuit left, Circuit right) {
+        this.left = left;
+        this.right = right;
+    }
+
+    public boolean operation() {
+        return this.value;
+    }
+
+    public boolean getResult() {
+        return operation();
+    }
+
+}
+
+class And extends Binary {
+
+    public boolean operation() {
+        return this.left.getResult() && this.right.getResult();
+    }
+
+}
+
+class Or extends Binary {
+
+    public boolean operation() {
+        return this.left.getResult() || this.right.getResult();
+    }
+
+}
+
+class Constant implements Circuit {
+	private boolean operand;
+
+    public boolean getResult() {
+        return operand;
+    }
+
+    public Constant(boolean operand) {
+        this.operand = operand;
+
     }
 }
