@@ -8,17 +8,14 @@ package circuit;
  *
  * @author arnabkumarshil
  */
-/*interface*/
-public abstract class Circuit {
-    public abstract boolean getResult();
-    
+public abstract class Binary extends Circuit {
+
+    protected Circuit left;
+    protected Circuit right;
+
+    public void setOperand(Circuit left, Circuit right) {
+        this.left = left;
+        this.right = right;
+    }
+
 }
-
-
-
-
-
-
-
-
-

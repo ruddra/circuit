@@ -8,17 +8,14 @@ package circuit;
  *
  * @author arnabkumarshil
  */
-/*interface*/
-public abstract class Circuit {
-    public abstract boolean getResult();
-    
+public class Constant extends Circuit {
+	private boolean operand;
+
+    public boolean getResult() {
+        return operand;
+    }
+
+    public void setValue(boolean val) {
+        this.operand = val;
+    }
 }
-
-
-
-
-
-
-
-
-

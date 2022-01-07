@@ -41,5 +41,11 @@ public class CircuitFactory {
         constant.setValue(false);
         return constant;
     }
+    
+    public Constant getConstant(boolean value) {
+        Constant constant = new Constant();
+        constant.setValue(value);
+        return constant;
+    }
 
 }

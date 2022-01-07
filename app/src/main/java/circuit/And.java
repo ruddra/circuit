@@ -8,17 +8,10 @@ package circuit;
  *
  * @author arnabkumarshil
  */
-/*interface*/
-public abstract class Circuit {
-    public abstract boolean getResult();
-    
+public class And extends Binary {
+
+    public boolean getResult() {
+        return this.left.getResult() && this.right.getResult();
+    }
+
 }
-
-
-
-
-
-
-
-
-
