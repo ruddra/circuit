@@ -12,8 +12,7 @@ import circuit.Gte;
 import circuit.CircuitInputException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.*;  
-
+import java.util.*;
 
 class CircuitTest {
 
@@ -176,12 +175,39 @@ class CircuitTest {
         } catch (CircuitInputException e) {
             fail();
         }
+
+        try {
+            Constant x1 = factory.getDoubleConstant(false, 0.0);
+            Constant x2 = factory.getDoubleConstant(false, 1.0);
+            Or gte = factory.getOr(x2, x1);
+            assertEquals(true, gte.getResult());
+        } catch (CircuitInputException e) {
+            fail();
+        }
+
+        try {
+            Constant x1 = factory.getDoubleConstant(false, 0.0);
+            Constant x2 = factory.getDoubleConstant(false, 0.0);
+            Or gte = factory.getOr(x2, x1);
+            assertEquals(false, gte.getResult());
+        } catch (CircuitInputException e) {
+            fail();
+        }
         
+        try {
+            Constant x1 = factory.getDoubleConstant(false, 0.0);
+            Constant x2 = factory.getDoubleConstant(false, 0.5);
+            Or gte = factory.getOr(x2, x1);
+            assertEquals(false, gte.getResult());
+        } catch (CircuitInputException e) {
+            fail();
+        }
+
         try {
             //or(and((false, 0.4), (true, true)), (false, 0.6))
             Constant x1 = factory.getDoubleConstant(false, 0.4);
             Constant x2 = factory.getBooleanConstant(true, true);
-            And and = factory.getAnd(x1,x2);
+            And and = factory.getAnd(x1, x2);
             Constant x3 = factory.getDoubleConstant(false, 0.6);
             Or or = factory.getOr(and, x3);
             assertEquals(.76, or.getDoubleResult());

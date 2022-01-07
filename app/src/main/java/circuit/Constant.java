@@ -52,6 +52,11 @@ public class Constant extends Circuit {
 
         if (!boolType && dval >= 0.0 && dval <= 1.0) {
             this.doubleValue = dval;
+            if (dval == 1.0) {
+                this.operand = true;
+            } else {
+                this.operand = false;
+            }
             
         } else if (boolType) {
             throw new CircuitInputException("input type value should be false");
