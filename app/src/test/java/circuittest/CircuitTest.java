@@ -12,6 +12,8 @@ import circuit.Gte;
 import circuit.CircuitInputException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.*;  
+
 
 class CircuitTest {
 
@@ -67,6 +69,8 @@ class CircuitTest {
             And and = factory.getAnd(x1, x2);
             Not not = factory.getNot(x1);
             Or or = factory.getOr(and, not);
+            Map map = factory.getBooleanMap(false);
+            assertEquals(map, or.getBooleanOutput()); // comparing hasmaps
             assertEquals(false, or.getResult());
         } catch (CircuitInputException e) {
             fail();
@@ -78,6 +82,8 @@ class CircuitTest {
             And and = factory.getAnd(x1, x2);
             Not not = factory.getNot(x1);
             Or or = factory.getOr(and, not);
+            Map map = factory.getBooleanMap(true);
+            assertEquals(map, or.getBooleanOutput());
             assertEquals(true, or.getResult());
         } catch (CircuitInputException e) {
             fail();
@@ -89,6 +95,8 @@ class CircuitTest {
             And and = factory.getAnd(x1, x2);
             Not not = factory.getNot(x1);
             Or or = factory.getOr(and, not);
+            Map map = factory.getDoubleMap(1.0);
+            assertEquals(map, or.getDoubleOutput());
             assertEquals(1.0, or.getDoubleResult());
         } catch (CircuitInputException e) {
             fail();
@@ -99,6 +107,8 @@ class CircuitTest {
             And and = factory.getAnd(x1, x2);
             Not not = factory.getNot(x1);
             Or or = factory.getOr(and, not);
+            Map map = factory.getDoubleMap(0.625);
+            assertEquals(map, or.getDoubleOutput());
             assertEquals(0.625, or.getDoubleResult());
         } catch (CircuitInputException e) {
             fail();
@@ -123,6 +133,8 @@ class CircuitTest {
             And x2 = factory.getAnd(x1, notx1);
             Gte gte = factory.getGte(x2, x1);
             assertEquals(false, gte.getResult());
+            Map map = factory.getBooleanMap(false);
+            assertEquals(map, gte.getBooleanOutput());
         } catch (CircuitInputException e) {
             fail();
         }
@@ -133,6 +145,8 @@ class CircuitTest {
             And x2 = factory.getAnd(x1, notx1);
             Gte gte = factory.getGte(x2, x1);
             assertEquals(false, gte.getResult());
+            Map map = factory.getBooleanMap(false);
+            assertEquals(map, gte.getBooleanOutput());
         } catch (CircuitInputException e) {
             fail();
         }
@@ -143,6 +157,8 @@ class CircuitTest {
             And x2 = factory.getAnd(x1, notx1);
             Gte gte = factory.getGte(x2, x1);
             assertEquals(true, gte.getResult());
+            Map map = factory.getBooleanMap(true);
+            assertEquals(map, gte.getBooleanOutput());
         } catch (CircuitInputException e) {
             fail();
         }

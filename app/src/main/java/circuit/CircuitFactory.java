@@ -4,6 +4,8 @@
  */
 package circuit;
 
+import java.util.*;
+
 /**
  *
  * @author arnabkumarshil
@@ -23,7 +25,7 @@ public class CircuitFactory {
         or.setOperand(left, right);
         return or;
     }
-    
+
     public Gte getGte(Circuit left, Circuit right) {
         Gte gte = new Gte();
         gte.setOperand(left, right);
@@ -47,13 +49,13 @@ public class CircuitFactory {
         constant.setValue(false);
         return constant;
     }
-    
+
     public Constant getConstant(boolean value) {
         Constant constant = new Constant();
         constant.setValue(value);
         return constant;
     }
-    
+
     public Constant getDoubleConstant(boolean type, double value) throws CircuitInputException {
         Constant constant = new Constant();
         try {
@@ -61,10 +63,10 @@ public class CircuitFactory {
         } catch (CircuitInputException e) {
             throw e;
         }
-        
+
         return constant;
     }
-    
+
     public Constant getBooleanConstant(boolean type, boolean value) throws CircuitInputException {
         Constant constant = new Constant();
         try {
@@ -72,8 +74,23 @@ public class CircuitFactory {
         } catch (CircuitInputException e) {
             throw e;
         }
-        
+
         return constant;
     }
 
+    public Map<Boolean, Boolean> getBooleanMap(boolean value) {
+
+        Map<Boolean, Boolean> map = new HashMap<Boolean, Boolean>();
+        map.put(true, value);
+        return map;
+
+    }
+
+        public Map<Boolean, Double> getDoubleMap(double value) {
+
+        Map<Boolean, Double> map = new HashMap<Boolean, Double>();
+        map.put(false, value);
+        return map;
+
+    }
 }
