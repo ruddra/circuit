@@ -23,6 +23,12 @@ public class CircuitFactory {
         or.setOperand(left, right);
         return or;
     }
+    
+    public Gte getGte(Circuit left, Circuit right) {
+        Gte gte = new Gte();
+        gte.setOperand(left, right);
+        return gte;
+    }
 
     public Not getNot(Circuit left) {
         Not not = new Not();

@@ -8,6 +8,7 @@ import circuit.CircuitFactory;
 import circuit.Constant;
 import circuit.Not;
 import circuit.Or;
+import circuit.Gte;
 import circuit.CircuitInputException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,6 +28,7 @@ class CircuitTest {
         assertTrue(and.getResult());
     }
 
+    @Test
     void testX1andX2orX3() {
         CircuitFactory factory = new CircuitFactory();
         Constant x1 = factory.getFalseConstant();
@@ -46,6 +48,7 @@ class CircuitTest {
         assertEquals(true, or.getResult());
     }
 
+    @Test
     public void testAlwaysTrue() {
         CircuitFactory factory = new CircuitFactory();
         Constant x1 = factory.getFalseConstant();
@@ -68,7 +71,7 @@ class CircuitTest {
         } catch (CircuitInputException e) {
             fail();
         }
-               
+
         try {
             Constant x1 = factory.getBooleanConstant(true, false);
             Constant x2 = factory.getBooleanConstant(true, true);
@@ -80,7 +83,6 @@ class CircuitTest {
             fail();
         }
 
-        
         try {
             Constant x1 = factory.getDoubleConstant(false, 0.0);
             Constant x2 = factory.getDoubleConstant(false, 1.0);
@@ -101,7 +103,7 @@ class CircuitTest {
         } catch (CircuitInputException e) {
             fail();
         }
-        
+
         try {
             Constant x1 = factory.getDoubleConstant(false, 0.0);
             Constant x2 = factory.getDoubleConstant(false, 2.0);
@@ -110,4 +112,66 @@ class CircuitTest {
         }
     }
 
+    @Test
+    public void testGreaterThanElement() {
+        // make the circuit
+        CircuitFactory factory = new CircuitFactory();
+        // test the circuit
+        try {
+            Constant x1 = factory.getDoubleConstant(false, 0.5);
+            Not notx1 = factory.getNot(x1);
+            And x2 = factory.getAnd(x1, notx1);
+            Gte gte = factory.getGte(x2, x1);
+            assertEquals(false, gte.getResult());
+        } catch (CircuitInputException e) {
+            fail();
+        }
+
+        try {
+            Constant x1 = factory.getDoubleConstant(false, 1.0);
+            Not notx1 = factory.getNot(x1);
+            And x2 = factory.getAnd(x1, notx1);
+            Gte gte = factory.getGte(x2, x1);
+            assertEquals(false, gte.getResult());
+        } catch (CircuitInputException e) {
+            fail();
+        }
+
+        try {
+            Constant x1 = factory.getDoubleConstant(false, 0.0);
+            Not notx1 = factory.getNot(x1);
+            And x2 = factory.getAnd(x1, notx1);
+            Gte gte = factory.getGte(x2, x1);
+            assertEquals(true, gte.getResult());
+        } catch (CircuitInputException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testImproperUseOfTheCircuit() {
+        CircuitFactory factory = new CircuitFactory();
+        try {
+            Constant x1 = factory.getDoubleConstant(false, 0.0);
+            Constant x2 = factory.getBooleanConstant(true, true);
+            Gte gte = factory.getGte(x2, x1);
+            assertEquals(true, gte.getResult());
+
+        } catch (CircuitInputException e) {
+            fail();
+        }
+        
+        try {
+            //or(and((false, 0.4), (true, true)), (false, 0.6))
+            Constant x1 = factory.getDoubleConstant(false, 0.4);
+            Constant x2 = factory.getBooleanConstant(true, true);
+            And and = factory.getAnd(x1,x2);
+            Constant x3 = factory.getDoubleConstant(false, 0.6);
+            Or or = factory.getOr(and, x3);
+            assertEquals(.76, or.getDoubleResult());
+
+        } catch (CircuitInputException e) {
+            fail();
+        }
+    }
 }

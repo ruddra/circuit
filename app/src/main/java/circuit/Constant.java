@@ -18,7 +18,12 @@ public class Constant extends Circuit {
     }
 
     public void setValue(boolean val) {
-        this.operand = val;
+        try{
+            this.setBoolValue(true, val);
+        } catch (CircuitInputException e)
+        {
+            // do nothing
+        }
     }
 
     @Override
@@ -38,7 +43,7 @@ public class Constant extends Circuit {
             
         }
         else  {
-            throw new CircuitInputException("invalid value");
+            throw new CircuitInputException("invalid type value");
         }
 
     }
@@ -48,6 +53,8 @@ public class Constant extends Circuit {
         if (!boolType && dval >= 0.0 && dval <= 1.0) {
             this.doubleValue = dval;
             
+        } else if (boolType) {
+            throw new CircuitInputException("input type value should be false");
         }
         else  {
             throw new CircuitInputException("out of bounds: " + dval);
