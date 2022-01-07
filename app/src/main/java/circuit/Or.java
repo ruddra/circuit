@@ -14,5 +14,9 @@ public class Or extends Binary {
     public boolean getResult() {
         return this.left.getResult() || this.right.getResult();
     }
+    
+    public double getDoubleResult() {
+        return 1-(1-left.getDoubleResult())*(1- right.getDoubleResult());
+    }
 
 }

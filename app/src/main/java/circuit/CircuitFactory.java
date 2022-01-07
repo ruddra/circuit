@@ -47,5 +47,27 @@ public class CircuitFactory {
         constant.setValue(value);
         return constant;
     }
+    
+    public Constant getDoubleConstant(boolean type, double value) throws CircuitInputException {
+        Constant constant = new Constant();
+        try {
+            constant.setDoubleValue(type, value);
+        } catch (CircuitInputException e) {
+            throw e;
+        }
+        
+        return constant;
+    }
+    
+    public Constant getBooleanConstant(boolean type, boolean value) throws CircuitInputException {
+        Constant constant = new Constant();
+        try {
+            constant.setBoolValue(type, value);
+        } catch (CircuitInputException e) {
+            throw e;
+        }
+        
+        return constant;
+    }
 
 }

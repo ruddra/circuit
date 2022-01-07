@@ -18,4 +18,8 @@ public abstract class Binary extends Circuit {
         this.right = right;
     }
 
+    public double getDoubleResult() {
+        return left.getDoubleResult() * right.getDoubleResult();
+    }
+
 }

@@ -10,8 +10,14 @@ package circuit;
  */
 public class And extends Binary {
 
+    @Override
     public boolean getResult() {
         return this.left.getResult() && this.right.getResult();
+    }
+
+    @Override
+    public double getDoubleResult() {
+        return left.getDoubleResult() * right.getDoubleResult();
     }
 
 }

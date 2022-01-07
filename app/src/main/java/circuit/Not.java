@@ -10,9 +10,12 @@ package circuit;
  */
 public class Not extends Unary {
 
-    
     public boolean getResult() {
         return !this.left.getResult();
+    }
+
+    public double getDoubleResult() {
+        return 1 - this.left.getDoubleResult();
     }
 
 }

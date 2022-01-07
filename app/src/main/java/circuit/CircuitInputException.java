@@ -8,17 +8,8 @@ package circuit;
  *
  * @author arnabkumarshil
  */
-/*interface*/
-public abstract class Circuit {
-    public abstract boolean getResult();
-    public abstract double getDoubleResult();
+public class CircuitInputException extends Exception { 
+    public CircuitInputException(String errorMessage) {
+        super(errorMessage);
+    }
 }
-
-
-
-
-
-
-
-
-

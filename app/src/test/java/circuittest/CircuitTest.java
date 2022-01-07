@@ -8,10 +8,12 @@ import circuit.CircuitFactory;
 import circuit.Constant;
 import circuit.Not;
 import circuit.Or;
+import circuit.CircuitInputException;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CircuitTest {
+
     @Test
     void testandX1X2() {
         CircuitFactory factory = new CircuitFactory();
@@ -24,6 +26,7 @@ class CircuitTest {
         and = factory.getAnd(x1, x2);
         assertTrue(and.getResult());
     }
+
     void testX1andX2orX3() {
         CircuitFactory factory = new CircuitFactory();
         Constant x1 = factory.getFalseConstant();
@@ -32,7 +35,7 @@ class CircuitTest {
         And and = factory.getAnd(x1, x2);
         Constant andResult = factory.getConstant(and.getResult());
         Or or = factory.getOr(x3, andResult);
-        assertEquals(false, or.getResult());      
+        assertEquals(false, or.getResult());
 
         x1 = factory.getTrueConstant();
         x2 = factory.getFalseConstant();
@@ -42,12 +45,69 @@ class CircuitTest {
         or = factory.getOr(x3, andResult);
         assertEquals(true, or.getResult());
     }
-    
-     public void testAlwaysTrue() {
+
+    public void testAlwaysTrue() {
         CircuitFactory factory = new CircuitFactory();
         Constant x1 = factory.getFalseConstant();
         Not not = factory.getNot(x1);
-        assertEquals(true, not.getResult());                  	 
+        assertEquals(true, not.getResult());
+    }
+
+    @Test
+    public void testX1andX2orNotX1() {
+        CircuitFactory factory = new CircuitFactory();
+
+        // test the circuit
+        try {
+            Constant x1 = factory.getBooleanConstant(true, true);
+            Constant x2 = factory.getBooleanConstant(true, false);
+            And and = factory.getAnd(x1, x2);
+            Not not = factory.getNot(x1);
+            Or or = factory.getOr(and, not);
+            assertEquals(false, or.getResult());
+        } catch (CircuitInputException e) {
+            fail();
+        }
+               
+        try {
+            Constant x1 = factory.getBooleanConstant(true, false);
+            Constant x2 = factory.getBooleanConstant(true, true);
+            And and = factory.getAnd(x1, x2);
+            Not not = factory.getNot(x1);
+            Or or = factory.getOr(and, not);
+            assertEquals(true, or.getResult());
+        } catch (CircuitInputException e) {
+            fail();
+        }
+
+        
+        try {
+            Constant x1 = factory.getDoubleConstant(false, 0.0);
+            Constant x2 = factory.getDoubleConstant(false, 1.0);
+            And and = factory.getAnd(x1, x2);
+            Not not = factory.getNot(x1);
+            Or or = factory.getOr(and, not);
+            assertEquals(1.0, or.getDoubleResult());
+        } catch (CircuitInputException e) {
+            fail();
+        }
+        try {
+            Constant x1 = factory.getDoubleConstant(false, 0.5);
+            Constant x2 = factory.getDoubleConstant(false, 0.5);
+            And and = factory.getAnd(x1, x2);
+            Not not = factory.getNot(x1);
+            Or or = factory.getOr(and, not);
+            assertEquals(0.625, or.getDoubleResult());
+        } catch (CircuitInputException e) {
+            fail();
+        }
+        
+        try {
+            Constant x1 = factory.getDoubleConstant(false, 0.0);
+            Constant x2 = factory.getDoubleConstant(false, 2.0);
+            fail();
+        } catch (CircuitInputException e) {
+        }
     }
 
 }
